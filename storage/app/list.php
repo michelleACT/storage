@@ -1,26 +1,14 @@
 <?php
   include './fn/fn.php';
   require '../vendor/autoload.php';
+  include './config.php';
   
   session_start();
 
   if(!isset($_SESSION['email'])){
   	header("location: ./index.php");
   }
-  /*
-  $credentials = new Aws\Credentials\Credentials('AKIAIUPNF6WRZ2C7HRIA', 'hxjzxtjtnKYURVSypSrehDh0Qe8FtLmYlQoho/dS');
 
-  $s3 = new Aws\S3\S3Client([
-		'version' => '2006-03-01',
-		'region'  => 'us-west-2',
-		'credentials' => $credentials
-        ]);
-
-  $bucket = 'activeon-test-bc';
-  //$prefix = 'test1@gmail.com';
-  */
-
-  include './config.php';
   $prefix = $_SESSION['email'];
 
   $list = $s3->listObjects(Array('Bucket'=>$bucket, 'Prefix'=>$prefix));
@@ -70,13 +58,30 @@
     } ?>
     </div>
 	</div>
+  <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
   function deleteByKey(key){
-    var url = "delete.php?Key=" + key;
-    
+    //var url = "delete.php?Key=" + key;
+    var dataStr = "Key="+key;
+	
 	var answer = confirm('Are you sure you want to delete this?');
 	if(answer){
-		location.href= url;
+		$.ajax({
+			type: "POST",
+			url: "./delete.php",
+			data: dataStr,
+			success : function(data){
+				if(data=="success"){
+					alert("success!");
+					location.reload(true);
+				}else{
+					alert(data);
+				}
+			},
+			error : function(json){
+				alert("Delete error : " + json);
+			}
+		});
 	}
 	
   }
