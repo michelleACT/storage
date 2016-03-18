@@ -61,19 +61,18 @@
   <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
   function deleteByKey(key){
-    //var url = "delete.php?Key=" + key;
     var dataStr = "Key="+key;
 	
 	var answer = confirm('Are you sure you want to delete this?');
 	if(answer){
 		$.ajax({
 			type: "POST",
-			url: "./delete.php",
+			url: "delete.php",
 			data: dataStr,
 			success : function(data){
-				if(data=="success"){
-					alert("success!");
-					location.reload(true);
+				if(data.indexOf("success")){
+					alert("Delete Success.");
+					location.reload();
 				}else{
 					alert(data);
 				}
