@@ -31,6 +31,7 @@
         <input type="submit" value="Upload" name="submit">
       </form>
     </div>
+	<div id="processDiv"><label id="processLab">test</label></div>
     <div clase="contentDiv">
     <ul class="titleUl">
       <li>file Name</li>
@@ -51,15 +52,17 @@
       <li class="alignRight"><?php echo date_format($result["LastModified"], 'm-d-Y'); ?></li>
       <li class="alignRight"><?php echo byteConvert( $result["ContentLength"]); ?></li>
       <li class="alignCenter"><button onclick="deleteByKey('<?php echo $item["Key"]?>')">Delete</button></li>
-      <li class="alignCenter"><button onclick="downloadByKey('<?php echo $item["Key"];?>','<?php echo $result["ContentLength"]; ?>')">Download</button></li>
+      <li class="alignCenter"><button onclick="downloadByKey('<?php echo $item["Key"];?>')">Download</button></li>
     </ul>
     <?php 
       }
     } ?>
     </div>
+	<div id="progressbar"><div class="progress-label">Loading...</div></div>
 	</div>
   <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
+  var progressbar = $( "#progressbar" ), progressLabel = $( ".progress-label" );
   function deleteByKey(key){
     var dataStr = "Key="+key;
 	
@@ -70,7 +73,7 @@
 			url: "delete.php",
 			data: dataStr,
 			success : function(data){
-				if(data.indexOf("success")){
+				if(data.indexOf("success") >  -1){
 					alert("Delete Success.");
 					location.reload();
 				}else{
@@ -78,15 +81,20 @@
 				}
 			},
 			error : function(json){
-				alert("Delete error : " + json);
+				alert("Delete error : [" + json.status + "] " + json.statusText);
+			},
+			beforeSend : function(e){
+				$("#processLab").text( "process");
+			},
+			complete : function(e){
+				$("#processLab").text("test");
 			}
 		});
 	}
-	
   }
 
   function downloadByKey(key,len){
-    var url = "download.php?Key=" + key + "&len=" + len;
+    var url = "download.php?Key=" + key;
     location.href= url;
   }
   </script>
