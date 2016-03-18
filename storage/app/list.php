@@ -2,8 +2,6 @@
   include './fn/fn.php';
   require '../vendor/autoload.php';
   include './config.php';
-  
-  session_start();
 
   if(!isset($_SESSION['email'])){
   	header("location: ./index.php");
@@ -31,7 +29,7 @@
         <input type="submit" value="Upload" name="submit">
       </form>
     </div>
-	<div id="processDiv"><label id="processLab">test</label></div>
+	<div id="processDiv"><label id="processLab"></label></div>
     <div clase="contentDiv">
     <ul class="titleUl">
       <li>file Name</li>
@@ -45,20 +43,22 @@
     foreach($listArray['Contents'] as $item){
       $result= $s3->getObject(Array('Bucket'=>$bucket, 'Key'=>$item['Key']));
       if($result["ContentLength"] > 0){
-    ?>
+	  	$fileName = str_replace($prefix."/","",$item['Key']);   
+	?>
     <ul class="contentsUl">
-      <li class="wid180"><?php echo str_replace($prefix."/","",$item['Key']); ?></li>
+      <li class="wid180"><?php echo $fileName; ?></li>
       <!-- <li><?php /* echo $result["Metadata"]["a"]; */ ?></li> -->
       <li class="alignRight"><?php echo date_format($result["LastModified"], 'm-d-Y'); ?></li>
       <li class="alignRight"><?php echo byteConvert( $result["ContentLength"]); ?></li>
-      <li class="alignCenter"><button onclick="deleteByKey('<?php echo $item["Key"]?>')">Delete</button></li>
-      <li class="alignCenter"><button onclick="downloadByKey('<?php echo $item["Key"];?>')">Download</button></li>
+      <li class="alignCenter"><button onclick="deleteByKey('<?php echo
+	  $fileName?>')">Delete</button></li>
+      <li class="alignCenter"><button onclick="downloadByKey('<?php echo
+	  $fileName;?>')">Download</button></li>
     </ul>
     <?php 
       }
     } ?>
     </div>
-	<div id="progressbar"><div class="progress-label">Loading...</div></div>
 	</div>
   <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
@@ -84,16 +84,16 @@
 				alert("Delete error : [" + json.status + "] " + json.statusText);
 			},
 			beforeSend : function(e){
-				$("#processLab").text( "process");
+				$("#processLab").text( "Loading..");
 			},
 			complete : function(e){
-				$("#processLab").text("test");
+				$("#processLab").text("");
 			}
 		});
 	}
   }
 
-  function downloadByKey(key,len){
+  function downloadByKey(key){
     var url = "download.php?Key=" + key;
     location.href= url;
   }
