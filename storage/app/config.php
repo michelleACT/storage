@@ -1,8 +1,9 @@
 <?php
   require '../vendor/autoload.php';
+  use Aws\S3\Exception\S3Exception as S3Exception;
 
-  $key = $_REQUEST['Key'];
-  $credentials = new Aws\Credentials\Credentials('AKIAIUPNF6WRZ2C7HRIA', 'hxjzxtjtnKYURVSypSrehDh0Qe8FtLmYlQoho/dS');
+  $credentials = new Aws\Credentials\Credentials('AKIAIUOJ5T7PTYKSJQJQ',
+	'XAoYzZ/OzYSO+LW7SAzNFAFhcTWDBrmZTcg0F2iN');
 
   $s3 = new Aws\S3\S3Client([
 		'version' => '2006-03-01',
