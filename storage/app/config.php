@@ -2,6 +2,8 @@
   require '../vendor/autoload.php';
   use Aws\S3\Exception\S3Exception as S3Exception;
 
+  session_start();
+
   $credentials = new Aws\Credentials\Credentials('AKIAIUOJ5T7PTYKSJQJQ',
 	'XAoYzZ/OzYSO+LW7SAzNFAFhcTWDBrmZTcg0F2iN');
 
