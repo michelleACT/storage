@@ -23,9 +23,8 @@
 	  <a href="./logout.php">LogOut</a>
 	</div>
     <div class="buttonDiv">
-      <form action="./upload.php" method="post" enctype="multipart/form-data">
+      <form id="uploadForm"  action="" method="post" enctype="multipart/form-data">
         <input type="file" name="userFile" >
-        <input type="hidden" name="prefix" value="<?=$prefix?>">
         <input type="submit" value="Upload" name="submit">
       </form>
     </div>
@@ -48,7 +47,8 @@
     <ul class="contentsUl">
       <li class="wid180"><?php echo $fileName; ?></li>
       <!-- <li><?php /* echo $result["Metadata"]["a"]; */ ?></li> -->
-      <li class="alignRight"><?php echo date_format($result["LastModified"], 'm-d-Y'); ?></li>
+      <li class="alignRight"><?php echo date_format($result["LastModified"],
+		'm/d/Y'); ?></li>
       <li class="alignRight"><?php echo byteConvert( $result["ContentLength"]); ?></li>
       <li class="alignCenter"><button onclick="deleteByKey('<?php echo
 	  $fileName?>')">Delete</button></li>
@@ -97,6 +97,35 @@
     var url = "download.php?Key=" + key;
     location.href= url;
   }
+
+  $("#uploadForm").on('submit',(function(e){
+	 $.ajax({
+		  type: "POST",
+		  url: "upload.php",
+		  cache: false,
+		  processData:false,
+		  contentType: false,
+		  data: new FormData(this),
+		  success : function(data){
+			  if(data.indexOf("success") > -1){
+				  alert("Upload Success.");
+				  location.reload();
+			  }else{
+				  alert(data);
+			  }
+		  },
+		  error : function(json){
+			  alert("Upload  error : [" + json.status + "] " + json.statusText);
+		  },
+		  beforeSend : function(e){
+			  $("#processLab").text( "Loading..");
+		  },
+		  complete : function(e){
+			  $("#processLab").text("");
+		  }
+	  });
+  }));
+
   </script>
   </body>
 </html>
