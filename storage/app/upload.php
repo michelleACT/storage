@@ -1,10 +1,14 @@
 <?php
 	require '../vendor/autoload.php';
 	include './config.php';
-  	
-	if(isset($_FILES['userFile']['type'])){
-		$prefix = $_SESSION['email'];
 
+
+	$prefix = $_SESSION['email'];
+	if(!isset($prefix)){
+		header("location: ./index.php");
+	}
+
+	if(isset($_FILES['userFile']['type'])){
 		$key = $prefix."/".$_FILES['userFile']['name'];
 		$expiredDate = date("m/d/Y", strtotime(date("m/d/Y")."+ 1 days ")); 
 
