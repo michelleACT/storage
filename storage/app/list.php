@@ -104,7 +104,6 @@
 
   function downloadByKey(key){
     var url = "download.php?Key=" + key;
-    //var url = "do.php?Key=" + key;
     location.href= url;
   }
 
