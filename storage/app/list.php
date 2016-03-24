@@ -1,4 +1,5 @@
 <?php
+  //header("Content-Type: text/html; charset=utf-8");
   include './fn/fn.php';
   require '../vendor/autoload.php';
   include './config.php';
@@ -15,25 +16,33 @@
 ?>
 <html>
   <link rel=stylesheet href='./css/main.css' type='text/css'> 
-  <head><title>activeon</title></head>
+  <head>
+  	 <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+  	<title>activeon</title>
+  </head>
   <body>
     <div id="list_mainDiv">
-    <h1>ACTIVEON Cloud</h1>
+	<div id="logoDiv">
+		<img src =
+		"http://www.activeon.com/wp/wp-content/uploads/2015/09/logo1.gif"/>
+	</div>
+    <!--<h1>ACTIVEON Cloud</h1> -->
 	<div class="topDiv">
 	  <a href="./logout.php">LogOut</a>
 	</div>
-    <div class="buttonDiv">
+    <div class="uploadDiv">
       <form id="uploadForm"  action="" method="post" enctype="multipart/form-data">
         <input type="file" name="userFile" >
         <input type="submit" value="Upload" name="submit">
       </form>
     </div>
 	<div id="processDiv"><label id="processLab"></label></div>
-    <div clase="contentDiv">
+    <div class="contentDiv">
     <ul class="titleUl">
       <li>file Name</li>
       <!-- <li>Resolution</li> -->
       <li>Updated Date</li>
+	  <li class="wid150">Expiration Date</li>
       <li class="alignCenter wid130">Size</li>
       <li class="alignCenter wid130">Delete</li>
       <li class="alignCenter wid130">Download</li>
@@ -47,12 +56,12 @@
     <ul class="contentsUl">
       <li class="wid180"><?php echo $fileName; ?></li>
       <!-- <li><?php /* echo $result["Metadata"]["a"]; */ ?></li> -->
-      <li class="alignRight"><?php echo date_format($result["LastModified"],
-		'm/d/Y'); ?></li>
+	  <li><?php echo date_format($result["LastModified"],'m/d/Y'); ?></li>
+      <li class="wid150"><?php echo date_format($result["Expires"],'m/d/Y'); ?></li>	 
       <li class="alignRight"><?php echo byteConvert( $result["ContentLength"]); ?></li>
-      <li class="alignCenter"><button onclick="deleteByKey('<?php echo
+      <li class="alignCenter"><button class="btn" onclick="deleteByKey('<?php echo
 	  $fileName?>')">Delete</button></li>
-      <li class="alignCenter"><button onclick="downloadByKey('<?php echo
+      <li class="alignCenter"><button class="btn" onclick="downloadByKey('<?php echo
 	  $fileName;?>')">Download</button></li>
     </ul>
     <?php 
@@ -95,6 +104,7 @@
 
   function downloadByKey(key){
     var url = "download.php?Key=" + key;
+    //var url = "do.php?Key=" + key;
     location.href= url;
   }
 
