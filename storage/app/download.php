@@ -24,8 +24,7 @@
   }catch(Exception $e){
 	echo "<script>".
 		 "location.href='list.php'; ".
-		 "alert('error : file not found. Please contact your system
-		 administrator.'); ".
+		 "alert('error : file not found. Please contact your system administrator.'); ".
 		 "</script>";
   }
 
