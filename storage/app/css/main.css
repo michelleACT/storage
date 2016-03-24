@@ -5,7 +5,12 @@
 
 .titleUl{
   font-size:1.3em;
-  color : #00f;
+  background-color: rgb(254, 255, 237);
+  border-radius: 10px 10px 0px 0px;
+color: rgb(0, 0, 0);
+	   text-align: center;
+padding: 15px !important;
+margin: 0px -40px 10px -25px !important;
 }
 
 .contentsUl li, .titleUl li {
@@ -13,11 +18,24 @@
     width: 140px;
 }
 
+.contentDiv{
+    border: 2px solid rgb(204, 204, 204);
+			    margin: 0px auto 50px;
+						    padding: 0px 40px 10px 25px;
+									     width: 1000px !important;
+}
+#logoDiv{
+margin: 20px auto;
+width: 1000px !important;
+padding: 0px 40px 10px 0px;
+}
+
 .titleUI li{ text-align: center; }
 
 .alignRight{text-align: right;}
 .wid180{width: 180px !important;}
 .alignCenter{ text-align: center;}
+.wid150{width: 150px !important;}
 
 @import http://fonts.googleapis.com/css?family=Raleway;
 /*----------------------------------------------
@@ -57,7 +75,9 @@ border:1px solid #ccc;
 	   font-size:16px;
 	   font-family:raleway
 }
-#login_loginBtn {
+
+
+#login_loginBtn, .btn{
 width:100%;
 	  background-color:#FFBC00;
 color:#fff;
@@ -72,4 +92,30 @@ cursor:pointer;
 .topDiv{
   text-align: right;
   	padding-right: 30px;
+width: 1000px !important;
+margin: 0px auto;
+		padding-left: 50px;
+		padding-bottom: 20px;
+}
+.topDiv a{
+text-decoration: none;
+font-size: 1.1em;
+}
+.btn{
+ background-color: rgb(255, 188, 0);
+border: medium none;
+color: white;
+	   text-align: center;
+	   text-decoration: none;
+display: inline-block;
+		 font-size: 14px;
+margin: 4px 2px;
+cursor: pointer;
+width: 90px !important;
+}
+
+.uploadDiv{
+margin: 0px auto;
+width: 1000px !important;
+padding: 0px 40px 10px 0px;
 }
