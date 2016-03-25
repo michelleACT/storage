@@ -1,7 +1,8 @@
 <?php
 	require '../vendor/autoload.php';
 	include './config.php';
-
+	include './fn/fn.php';
+	
 	if(!isset($_SESSION['email'])){
 		header("location: ./index.php");
 	}
@@ -20,13 +21,16 @@
 			try{
 				$s3->deleteObject($param);
 			}catch(S3Exception $e){
-				$msg = "error : [delete] ".$e->getMessage();
+				$msg = "error : Please contact your system administ";
+				//console_log("error : [delete] ".$e->getMessage());
 			}
 		}else{
 			$msg = "error : file not found.";
+			//console_log("error : [delete] file not found.");
 		}
 	} catch(Exception $e){
-		$msg = $msg."error : [delete:find] ".$e->getMessage();
+		$msg = "error : Please contact your system administ";
+		//console_log("error : [delete] ".$e->getMessage());
 	}
 	
 	echo $msg;

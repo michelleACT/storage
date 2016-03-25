@@ -30,7 +30,8 @@
 	<div class="topDiv">
 	  <a href="./logout.php">LogOut</a>
 	</div>
-    <div class="uploadDiv">
+	<div id="progressbar" style="display:none"></div>
+	<div class="uploadDiv">
       <form id="uploadForm"  action="" method="post" enctype="multipart/form-data">
         <input type="file" name="userFile" >
         <input type="submit" value="Upload" name="submit">
@@ -72,6 +73,7 @@
   <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
   var progressbar = $( "#progressbar" ), progressLabel = $( ".progress-label" );
+  
   function deleteByKey(key){
     var dataStr = "Key="+key;
 	
@@ -84,19 +86,21 @@
 			success : function(data){
 				if(data.indexOf("success") >  -1){
 					alert("Delete Success.");
-					location.reload();
+					//location.reload();
 				}else{
 					alert(data);
 				}
 			},
-			error : function(json){
-				alert("Delete error : [" + json.status + "] " + json.statusText);
+			error : function(data){
+				//alert("Delete error : [" + data.status + "] " + data.statusText);
+				alert("error : Please contact your system administrator.");
 			},
 			beforeSend : function(e){
 				$("#processLab").text( "Loading..");
 			},
 			complete : function(e){
 				$("#processLab").text("");
+				location.reload();
 			}
 		});
 	}
@@ -118,19 +122,21 @@
 		  success : function(data){
 			  if(data.indexOf("success") > -1){
 				  alert("Upload Success.");
-				  location.reload();
+				  //location.reload();
 			  }else{
 				  alert(data);
 			  }
 		  },
-		  error : function(json){
-			  alert("Upload  error : [" + json.status + "] " + json.statusText);
+		  error : function(data){
+			  //alert("Upload  error : [" + data.status + "] " + data.statusText);
+		  	alert("error : Please contact your system administrator");
 		  },
 		  beforeSend : function(e){
 			  $("#processLab").text( "Loading..");
 		  },
 		  complete : function(e){
 			  $("#processLab").text("");
+			  location.reload();
 		  }
 	  });
   }));
