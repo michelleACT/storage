@@ -7,7 +7,7 @@
 		header("location: ./index.php");
 	}	
 	
-	$prefix = "test1@gmail.com"; //$_SESSION['email'];
+	$prefix = $_SESSION['email'];
 
 	if(isset($_FILES['userFile']['type'])){
 		$key = $prefix."/".$_FILES['userFile']['name'];
