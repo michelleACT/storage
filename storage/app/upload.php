@@ -6,6 +6,7 @@
 	if(!isset($_SESSION['email'])){
 		header("location: ./index.php");
 	}	
+
 	
 	$prefix = $_SESSION['email'];
 
@@ -26,10 +27,12 @@
 			
 			echo "success";
 		}catch(Exception $e){
+			//console_log("error : ".$_FILES["userFile"]["error"]);
 		 	echo "error : Please contact your system administrator";
             //console_log("error : [upload] ".$e->getMessage());
 		}
 	}else{
+		//console_log("error : ".$_FILES["userFile"]["error"]);
 	 	echo "error : file not found.";
         //console_log("error : [upload] ".$e->getMessage());
 	}

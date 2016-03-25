@@ -34,7 +34,7 @@
 	<div class="uploadDiv">
       <form id="uploadForm"  action="" method="post" enctype="multipart/form-data">
         <input type="file" name="userFile" >
-        <input type="submit" value="Upload" name="submit">
+         <input type="submit" value="Upload" name="submit" >
       </form>
     </div>
 	<div id="processDiv"><label id="processLab"></label></div>
@@ -55,7 +55,15 @@
 	  	$fileName = str_replace($prefix."/","",$item['Key']);   
 	?>
     <ul class="contentsUl">
-      <li class="wid180"><?php echo $fileName; ?></li>
+      <li class="wid180">
+	  	<?php 
+			if(strlen($fileName) < 20){  
+			 	echo $fileName; 
+			}else{ 
+			 	echo substr($fileName, 0, 10)."...";  
+			} 
+		?>
+	   </li>
       <!-- <li><?php /* echo $result["Metadata"]["a"]; */ ?></li> -->
 	  <li><?php echo date_format($result["LastModified"],'m/d/Y'); ?></li>
       <li class="wid150"><?php echo date_format($result["Expires"],'m/d/Y'); ?></li>	 
@@ -72,7 +80,6 @@
 	</div>
   <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
-  var progressbar = $( "#progressbar" ), progressLabel = $( ".progress-label" );
   
   function deleteByKey(key){
     var dataStr = "Key="+key;
@@ -86,7 +93,6 @@
 			success : function(data){
 				if(data.indexOf("success") >  -1){
 					alert("Delete Success.");
-					//location.reload();
 				}else{
 					alert(data);
 				}
@@ -100,7 +106,7 @@
 			},
 			complete : function(e){
 				$("#processLab").text("");
-				location.reload();
+				location.href = "list.php";
 			}
 		});
 	}
@@ -122,12 +128,12 @@
 		  success : function(data){
 			  if(data.indexOf("success") > -1){
 				  alert("Upload Success.");
-				  //location.reload();
 			  }else{
 				  alert(data);
 			  }
 		  },
-		  error : function(data){
+		  //error : function(data){
+		  error : function(xhr,status,error){
 			  //alert("Upload  error : [" + data.status + "] " + data.statusText);
 		  	alert("error : Please contact your system administrator");
 		  },
@@ -136,9 +142,9 @@
 		  },
 		  complete : function(e){
 			  $("#processLab").text("");
-			  location.reload();
+			  //location.href="list.php";
 		  }
-	  });
+	  });		
   }));
 
   </script>
