@@ -11,8 +11,7 @@
   $prefix = $_SESSION['email'];
 
   $list = $s3->listObjects(Array('Bucket'=>$bucket, 'Prefix'=>$prefix));
-  $listArray = $list->toArray(); 
-
+  $listArray = $list->toArray();
 ?>
 <html>
   <link rel=stylesheet href='./css/main.css' type='text/css'> 
@@ -23,10 +22,10 @@
   <body>
     <div id="list_mainDiv">
 	<div id="logoDiv">
-		<img src =
-		"http://www.activeon.com/wp/wp-content/uploads/2015/09/logo1.gif"/>
+		<a href="./list.php">
+			<img src ="http://www.activeon.com/wp/wp-content/uploads/2015/09/logo1.gif"/>
+		</a>
 	</div>
-    <!--<h1>ACTIVEON Cloud</h1> -->
 	<div class="topDiv">
 	  <a href="./logout.php">LogOut</a>
 	</div>
@@ -34,7 +33,7 @@
 	<div class="uploadDiv">
       <form id="uploadForm"  action="" method="post" enctype="multipart/form-data">
         <input type="file" name="userFile" >
-         <input type="submit" value="Upload" name="submit" >
+          <input type="submit" value="Upload" name="submit" >
       </form>
     </div>
 	<div id="processDiv"><label id="processLab"></label></div>
@@ -48,11 +47,11 @@
       <li class="alignCenter wid130">Delete</li>
       <li class="alignCenter wid130">Download</li>
     </ul>
-    <?php
+    <?php 
     foreach($listArray['Contents'] as $item){
       $result= $s3->getObject(Array('Bucket'=>$bucket, 'Key'=>$item['Key']));
       if($result["ContentLength"] > 0){
-	  	$fileName = str_replace($prefix."/","",$item['Key']);   
+	  	$fileName = str_replace($prefix."/","",$item['Key']);  
 	?>
     <ul class="contentsUl">
       <li class="wid180">
@@ -66,18 +65,18 @@
 	   </li>
       <!-- <li><?php /* echo $result["Metadata"]["a"]; */ ?></li> -->
 	  <li><?php echo date_format($result["LastModified"],'m/d/Y'); ?></li>
-      <li class="wid150"><?php echo date_format($result["Expires"],'m/d/Y'); ?></li>	 
+      <li class="wid150"><?php echo date_format($result["Expires"],'m/d/Y');
+	  ?></li>
       <li class="alignRight"><?php echo byteConvert( $result["ContentLength"]); ?></li>
-      <li class="alignCenter"><button class="btn" onclick="deleteByKey('<?php echo
-	  $fileName?>')">Delete</button></li>
-      <li class="alignCenter"><button class="btn" onclick="downloadByKey('<?php echo
-	  $fileName;?>')">Download</button></li>
+      <li class="alignCenter"><button class="btn" onclick="deleteByKey('<?php echo $fileName?>')">Delete</button></li>
+      <li class="alignCenter"><button class="btn" onclick="downloadByKey('<?php echo $fileName;?>')">Download</button></li>
     </ul>
     <?php 
-      }
+      } 
     } ?>
     </div>
 	</div>
+  </body>
   <script src="./js/jquery-2.2.1.min.js"></script>
   <script>
   
@@ -116,7 +115,7 @@
     var url = "download.php?Key=" + key;
     location.href= url;
   }
-
+  
   $("#uploadForm").on('submit',(function(e){
 	 $.ajax({
 		  type: "POST",
@@ -148,6 +147,5 @@
   }));
 
   </script>
-  </body>
 </html>
 
